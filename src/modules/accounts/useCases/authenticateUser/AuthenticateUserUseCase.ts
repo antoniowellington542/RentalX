@@ -2,8 +2,8 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
-import { AppError } from '../../../../errors/AppError';
-import { IUsersRepository } from '../../repositories/IUsersRepository';
+import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
+import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   password: string;
@@ -38,8 +38,7 @@ class AuthenticateUserUseCase {
       throw new AppError('Email or password invalid');
     }
 
-    const token = sign({}, '108a58283c968268aba24c951b7fec44', {
-      subject: user.id,
+    const token = sign({ id: user.id }, '108a58283c968268aba24c951b7fec44', {
       expiresIn: '1d',
     });
 
