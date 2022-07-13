@@ -11,7 +11,7 @@
       "@shared/*": ["shared/*"],
       "@errors/*": ["errors/*"],
       "@database/*": ["database/*"],
-      "@utils/*": ["utils/*"],
+      "@utils/*": ["utils/*"]
     },                                      
     "resolveJsonModule": true,                        
     "outDir": "./dist",                                  

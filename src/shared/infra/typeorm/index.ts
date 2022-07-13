@@ -7,8 +7,8 @@ const AppDataSource = new DataSource({
   username: 'antonio',
   password: '123456',
   database: 'rentx',
-  entities: ['./src/modules/**/entities/*.ts'],
-  migrations: ['./src/database/migrations/*.ts'],
+  entities: ['./src/modules/**/infra/typeorm/entities/*.ts'],
+  migrations: ['./src/shared/infra/typeorm/migrations/*.ts'],
 });
 
 export function createConnection(
