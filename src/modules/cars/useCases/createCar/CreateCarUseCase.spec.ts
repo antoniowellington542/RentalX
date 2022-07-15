@@ -1,106 +1,11 @@
-/* eslint-disable max-classes-per-file */
 import { v4 as uuidv4 } from 'uuid';
 
+import { ICreateCarDTO } from '@modules/cars/dtos/ICreateCarDTO';
+import { Car } from '@modules/cars/infra/typeorm/entities/Car';
+import { CarsRepositoryInMemory } from '@modules/cars/repositories/in-memory/CarsRepositoryInMemory';
 import { AppError } from '@shared/errors/AppError';
 
-interface ICreateCarDTO {
-  name: string;
-  description: string;
-  daily_rate: number;
-  license_plate: string;
-  fine_amount: number;
-  brand: string;
-}
-
-class Car {
-  id?: string;
-  name: string;
-  description: string;
-  daily_rate: string;
-  license_plate: string;
-  fine_amount: number;
-  brand: string;
-  available: boolean;
-
-  constructor() {
-    if (!this.id) {
-      this.id = uuidv4();
-    }
-
-    this.available = true;
-  }
-}
-
-interface ICarsRepository {
-  create(data: ICreateCarDTO): Promise<void>;
-  findByName(name: string): Promise<Car>;
-  findByLicensePlate(license_plate: string): Promise<Car>;
-}
-
-const carsRepository: Car[] = [];
-class CreateCarUseCase {
-  constructor(private carsRepository: ICarsRepository) {}
-  async execute({
-    name,
-    description,
-    daily_rate,
-    license_plate,
-    fine_amount,
-    brand,
-  }: ICreateCarDTO): Promise<void> {
-    const carLicensePlateAlreadyExists =
-      await this.carsRepository.findByLicensePlate(license_plate);
-
-    if (carLicensePlateAlreadyExists) {
-      throw new AppError('Car with license plate already exists');
-    }
-
-    this.carsRepository.create({
-      name,
-      description,
-      daily_rate,
-      license_plate,
-      fine_amount,
-      brand,
-    });
-  }
-}
-
-class CarsRepositoryInMemory implements ICarsRepository {
-  private repository: Car[];
-
-  constructor() {
-    this.repository = carsRepository;
-  }
-
-  async create({
-    name,
-    description,
-    daily_rate,
-    license_plate,
-    fine_amount,
-    brand,
-  }: ICreateCarDTO): Promise<void> {
-    const car = new Car();
-    Object.assign(car, {
-      name,
-      description,
-      daily_rate,
-      license_plate,
-      fine_amount,
-      brand,
-    });
-    await this.repository.push(car);
-  }
-
-  async findByName(name: string): Promise<Car> {
-    return this.repository.find((car) => car.name === name);
-  }
-
-  async findByLicensePlate(license_plate: string): Promise<Car> {
-    return this.repository.find((car) => car.license_plate === license_plate);
-  }
-}
+import { CreateCarUseCase } from './CreateCarUseCase';
 
 describe('CreateCarUseCase', () => {
   let createCarUseCase: CreateCarUseCase;

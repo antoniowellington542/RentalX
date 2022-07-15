@@ -8,12 +8,10 @@
 
 **RF**
 - [x] Deve ser possível cadastrar um novo veiculo.
-- [] Deve ser possível listar todas as categorias.
 
 **RN**
 - [x] Não deve ser possível cadastrar um veiculo com uma placa já existente.
-- [] Não deve ser possível alterar a placa de um veiculo já cadastrado.
-- [] O veiculo deve ser cadastrado com o status de disponivel.
+- [x] O veiculo deve ser cadastrado com o status de disponivel.
 - [] Não deve ser possível usuarios comuns cadastrarem veiculos.
 
 # Listagem de veiculos
@@ -63,3 +61,6 @@
 - [] O aluguel deve ter duração mínima de 24 horas.
 - [] Não deve ser possível cadastrar um novo aluguel caso já exista um aberto para o mesmo usuário.
 - [] Não deve ser possível cadastrar um novo aluguel caso já exista um aberto para o mesmo veiculo.
+
+# Atualizar carro
+- [] Não deve ser possível alterar a placa de um veiculo já cadastrado.
