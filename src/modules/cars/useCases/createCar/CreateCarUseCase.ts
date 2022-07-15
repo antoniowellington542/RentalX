@@ -1,13 +1,21 @@
 import { inject, injectable } from 'tsyringe';
 
-import { ICreateCarDTO } from '@modules/cars/dtos/ICreateCarDTO';
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 import { AppError } from '@shared/errors/AppError';
+
+interface IRequest {
+  name: string;
+  description: string;
+  daily_rate: number;
+  license_plate: string;
+  fine_amount: number;
+  brand: string;
+}
 
 @injectable()
 class CreateCarUseCase {
   constructor(
-    @inject('cars')
+    @inject('CarsRepository')
     private carsRepository: ICarsRepository
   ) {}
   async execute({
@@ -17,7 +25,7 @@ class CreateCarUseCase {
     license_plate,
     fine_amount,
     brand,
-  }: ICreateCarDTO): Promise<void> {
+  }: IRequest): Promise<void> {
     const carLicensePlateAlreadyExists =
       await this.carsRepository.findByLicensePlate(license_plate);
 

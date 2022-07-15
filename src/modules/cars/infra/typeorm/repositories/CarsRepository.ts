@@ -34,3 +34,5 @@ class CarsRepository implements ICarsRepository {
     return car;
   }
 }
+
+export { CarsRepository };
